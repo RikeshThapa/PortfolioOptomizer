@@ -31,9 +31,15 @@ dt_end = dt.datetime(2010, 12, 31)			 # End date specification
 dt_timeofday = dt.timedelta(hours=16)		#This gives us the data that was available at the close of the day
 ldt_timestamps = du.getNYSEdays(dt_start, dt_end, dt_timeofday) #list of timestamps that represent NYSE closing times between teh start and end dates
 
-c_dataobj = da.DataAccess('Yahoo')
-ls_keys = ['open', 'high', 'low', 'close', 'volume', 'actual_close']
-ldf_data = c_dataobj.get_data(ldt_timestamps, ls_symbols, ls_keys)
-d_data = dict(zip(ls_keys, ldf_data))
+c_dataobj = da.DataAccess('Yahoo')			#Create object that reads from Yahoo datasource
+ls_keys = ['open', 'high', 'low', 'close', 'volume', 'actual_close']		#The data types that i would like to read
+ldf_data = c_dataobj.get_data(ldt_timestamps, ls_symbols, ls_keys)			# Data frome with all the different data
+d_data = dict(zip(ls_keys, ldf_data))			# Convert dataframe to dictionary so it can be accessed easily
 
-print d_data
+na_price = d_data["close"].values  #List of closing prices put into 2D numpy array
+plt.clf()						 # Clearsprevious graphs that may have been drawn on matplotlib
+plt.plot(ldt_timestamps, na_price) #Plot the data in na_price
+plt.legend(ls_symbols)				#This line and below are just legends and colors
+plt.ylabel('Adjusted Close')
+plt.xlabel('Date')
+plt.savefig('adjustedclose.pdf', format='pdf')
