@@ -25,10 +25,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-ls_symbols = ["GOOG", "APPL", "GLD", "XOM"]
-dt_start = dt.datetime(2006, 1, 1)
-dt_end = dt.datetime(2010, 12, 31)
-dt_timeofday = dt.timedelta(hours=16)
-ldt_timestamps = du.getNYSEdays(dt_start, dt_end, dt_timeofday)
+ls_symbols = ["GOOG", "APPL", "GLD", "XOM"]  # Equities being passed as paramenters
+dt_start = dt.datetime(2006, 1, 1)			 # Start date specification
+dt_end = dt.datetime(2010, 12, 31)			 # End date specification
+dt_timeofday = dt.timedelta(hours=16)		#This gives us the data that was available at the close of the day
+ldt_timestamps = du.getNYSEdays(dt_start, dt_end, dt_timeofday) #list of timestamps that represent NYSE closing times between teh start and end dates
 
-print ldt_timestamps
+c_dataobj = da.DataAccess('Yahoo')
+ls_keys = ['open', 'high', 'low', 'close', 'volume', 'actual_close']
+ldf_data = c_dataobj.get_data(ldt_timestamps, ls_symbols, ls_keys)
+d_data = dict(zip(ls_keys, ldf_data))
+
+print d_data
