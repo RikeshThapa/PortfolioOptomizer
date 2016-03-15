@@ -45,4 +45,12 @@ plt.xlabel('Date')
 plt.savefig('adjustedclose.pdf', format='pdf')
 
 na_normalized_price = na_price[0, :]/na_price[0, :] #Normalize the data with respect to teh first day's price
+for n in na_normalized_price:
+	print n
+#daily returns for day t:
+#(ret(t) = price(t-1))-1
+
+na_rets = na_normalized_price.copy()
+returns = tsu.returnize0(na_rets)
+print returns
 
