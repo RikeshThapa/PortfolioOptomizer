@@ -43,3 +43,6 @@ plt.legend(ls_symbols)				#This line and below are just legends and colors
 plt.ylabel('Adjusted Close')
 plt.xlabel('Date')
 plt.savefig('adjustedclose.pdf', format='pdf')
+
+na_normalized_price = na_price[0, :]/na_price[0, :] #Normalize the data with respect to teh first day's price
+
